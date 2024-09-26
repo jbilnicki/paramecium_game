@@ -1,52 +1,48 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 20 09:13:41 2022
-
-@author: Acer
-"""
 
 import pygame
 import random
 import math
 
-# utwoezenie ekranu i nadanie nazwy
+# creating window
 screen = pygame.display.set_mode((800,600))
 pygame.font.init()
 pygame.display.set_caption('Paramecium')
 
 
-# liczba punktów
+# score
 score = 0
 bonus = 100
 
-# przygotowanie do wyswietlenie tych informacji
+# required for displaying information
 
 font = pygame.font.SysFont("Comic Sans MS", 20)
 text = font.render("score", False, [0, 0, 0])
 
 
-# gracz
-# ikonka gracza
+# player
+
+# player's image
 player_img = pygame.image.load('paramecium.png')
-# współrzędne gracza (srodek okna)
-# tylko żeby też srodek obrazka był na srodku okna
-# a nie jego lewy gorny róg
-player_x = 368 #(800/2 - 64/2) 64 to szerokosc obrazka
-player_y = 400 # to tak na oko xd
+
+# player's initial coordinates
+# center of the image on center of window
+player_x = 368 #(800/2 - 64/2) 
+player_y = 400 
 speed_x = 0
 speed_y = 0
 
 # ameba
 global a_speed_x, a_speed_y
 amoeba_img = pygame.image.load('amoeba.png')
-# współrzędne losowe
+
+# random coordinates
 amoeba_x = random.randint(0, 736)
 amoeba_y = random.randint(0, 536)
 a_speed_x = 0.1
 a_speed_y = 0.1
 
 class Bacteria(object):
-    '''tworzy obiekt typu bakteria, ktory jest łapany przez gracza'''
+    '''creates bacterium object'''
     
     b_img = pygame.image.load('bacteria.png')
     x = random.randint(0, 736)
@@ -65,11 +61,13 @@ class Bacteria(object):
     
     
     def gen_bacterium(self, screen):
+        '''displays bacterium on the window'''
     
         screen.blit(self.image, (self.b_x, self.b_y))
         
         
     def move_b(self):
+        '''function needed for bacterium movements'''
         
         self.b_x += self.b_speed_x
         if self.b_x <= 0:
@@ -96,34 +94,25 @@ class Bacteria(object):
         self.gen_bacterium(screen)
         
     def detect_colision(self, x, y, d):
-        ''' wykrywa kolizję między dwoma obiektami o podanych 
-        współrzędnych na podstawie prostego wzoru'''
-        # pow to potęga po przecinku jej wykładnik
+        ''' detects colision between two points with a simple equation'''
+        
         distance = math.sqrt((math.pow(self.b_x - x, 2) + math.pow(self.b_y - y, 2)))
         if distance < d:
             return True
         else:
             return False
         
-    '''def duplicate(self):
-        # prawdopodobieństwo rozmnożenia
-        p_dup = 0.3
-        r = random.random()
-        x = self.b_x + 5
-        y = self.b_y + 5
-        if r < p_dup:
-            new_bac = Bacteria(x, y)
-            return new_bac'''
+    
             
 
-# umieszczenie gracza na ekranie
+# display paramecium and amoeba
 def player(x, y):
     screen.blit(player_img, (x, y))
     
 def amoeba(x, y):
     screen.blit(amoeba_img, (x, y))
 
-# bakterie    
+# 3 bacteria  
 bac_1 = Bacteria()
 #bac_1.gen_bacterium(screen)
 x = random.randint(0, 736)
@@ -135,9 +124,8 @@ bac_3 = Bacteria(x, y)
 
     
 def detect_colision(x_1, y_1, x_2, y_2, d):
-    ''' wykrywa kolizję między dwoma obiektami o podanych 
-    współrzędnych na podstawie prostego wzoru'''
-    # pow to potęga po przecinku jej wykładnik
+    '''  detects colision between two points with a simple equation'''
+    # pow = power
     distance = math.sqrt((math.pow(x_1 - x_2, 2) + math.pow(y_1 - y_2, 2)))
     if distance < d:
         return True
@@ -146,11 +134,11 @@ def detect_colision(x_1, y_1, x_2, y_2, d):
 
 
          ###########    
-# pętla gry
+# main game loop
 running = True
 
 while running:
-    # ustawiamy kolor tła kod RGB, zmiana jako bonus za dobrą grę
+    # background color, with a bonus
     if score < bonus:
         screen.fill((51, 255, 255))
     else:
@@ -169,8 +157,7 @@ while running:
             if event.key == pygame.K_DOWN:
                 speed_y = 1
         if event.type == pygame.KEYUP:
-            # żeby działało tylko dla strzałek i nie zaburzało się 
-            # przy klikaniu innych klawiszy dodajemy warunek
+            # detects only arrows and other keys do not disturbe game
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 speed_x = 0
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
@@ -178,11 +165,11 @@ while running:
             
       
     player_x += speed_x
-    # ograniczenie ruchu do wymiarów ekranu
+    # player can move only inside the window
     if player_x <= 0:
         player_x = 0
     elif player_x >= 736:
-        # żeby nie wystawał
+        # such that player doesn't hide on window borders
         player_x = 736
         
     player_y += speed_y
@@ -196,7 +183,7 @@ while running:
     if amoeba_x <= 0:
         a_speed_x *= -1
     elif amoeba_x >= 736:
-        # żeby nie wystawał
+        
         a_speed_x *= -1
     if score >= bonus:   
         amoeba_x += 3 * a_speed_x
@@ -216,16 +203,9 @@ while running:
     
     
           ############
-    '''bac_1.gen_bacterium(screen)     
-    bac_1.move_b()
     
-    bac_2.gen_bacterium(screen)     
-    bac_2.move_b()
     
-    bac_3.gen_bacterium(screen)     
-    bac_3.move_b()'''
-    
-    # wywołanie postaci   
+    # player initialising  
     player(player_x, player_y)
     amoeba(amoeba_x, amoeba_y)
     #bacterium(b_x, b_y)
@@ -309,7 +289,7 @@ while running:
         text_2 = font.render(str(score), False, [0, 0, 0])
         screen.blit(text_2, [10, 70])    
     
-    #print(score)
+
     screen.blit(text, [5, 25]) 
     
            
@@ -318,7 +298,7 @@ while running:
        ###########
     pygame.display.update()
     
-#print(bacteria)
+
 
 pygame.quit()
 
