@@ -215,7 +215,7 @@ while running:
     
             ###################
     
-    # fragment kodu wykonujący się dla wszstkich obiektów klasy Bacteria
+    # code running for every object in class Bacteria
     
     for bacterium in bacteria: 
         
@@ -234,7 +234,7 @@ while running:
             bacterium.gen_b(screen)
             
             
-         # sprawdzanie kolizji bakterii z amebą
+         # collision with amoeba
         
         e = amoeba_x + 35
         f = amoeba_y + 35
@@ -243,19 +243,19 @@ while running:
             bacterium.b_y = -50
             bacterium.gen_b(screen)
             
-        # rozmnożenie bakterii
+        # bacteria multiplication
         
-        # lista która posłuży do numeracji potomnych bakterii
+        # list for daughter cells numeration
         b_names = []
         for i in range(100):
             n = str(i)
             b_names.append(n)
             
-            
-        '''# prawdopodobieństwo rozmnożenia    
+        # possible future upgrade 
+        '''# probability of multiplication 
         p_dup = 0.01
         r = random.random()
-        # żeby nie wyskakiwała na bakterii rodzicielskiej
+        # shift in daughter cell position so it is not over the parent one
         x = bacterium.b_x + 10
         y = bacterium.b_y + 10
         if r < p_dup:
@@ -268,7 +268,7 @@ while running:
             
             ##################
     
-    # sprawdzenie kolizji gracza z amebą
+    # player collision with the amoeba
     a = amoeba_x + 20
     b = amoeba_y + 20
     colision_2 =  detect_colision(a, b, player_x, player_y, 60)
