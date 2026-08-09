@@ -13,8 +13,9 @@ Game was created with python and pygame - these are necessary dependencies
 
 ## How to play
 
-You use keyboard arrows to navigate paramecium. Score is displayed in left upper corner, keep track of it,  
+You use keyboard arrows to navigate *Paramecium*. Score is displayed in left upper corner, keep track of it,  
 because after 100 points there is a bonus for you!  
-**Warning:** You should choose your own images as graphics for all organisms (file with .png extension and appropriate name - see source code)
+**Warning:** You should choose your own images as graphics for all organisms (file with .png extension and appropriate name - e.g. bacterium.png, paramecium.png.  
+Adjust size of the images e.g. amoeba should be the largest while bacterium the smallest one)
 
 Have a good time!
